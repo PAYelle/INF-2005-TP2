@@ -4,7 +4,10 @@ require 'utils.php';
 use function Ouvrages\{findAll};
 use function Utils\{getAttributes, showSupports};
 
-
+/**
+ * Fonction permettant de trouver tous les livres dans la base de données et de les
+ * afficher à l'écran. S'il n'y a aucun livre alors affiche un message en conséquence.
+ */
 function showBookIndex() {
     $tabEdition = [1 => '1st ed.', 2 => '2nd ed.', 3 => '3rd ed.'];
     $ouvrages = findAll();
@@ -16,10 +19,14 @@ function showBookIndex() {
             showTableRowIndex($datas);
         }
     } else {
-        echo "";
+        echo "<h3>Il n'y a présentement aucun livre à afficher.</h3>";
     }
 }
 
+/**
+ * Fonction permettant d'afficher à l'écran les 'rows' de la table html.
+ * @param $datas : l'information que contient un ouvrage.
+ */
 function showTableRowIndex($datas) {
     $supports = showSupports($datas['supports']);
     echo "<tr>";
@@ -31,6 +38,15 @@ function showTableRowIndex($datas) {
     echo "</tr>";
 }
 
+/**
+ * Fonction permettant de formatter le titre et l'édition ensemble si les deux champs
+ * sont remplis.
+ * @param $title : le titre de l'ouvrage.
+ * @param $edition : l'édition de l'ouvrage.
+ * @param $tabEdition : un tableau contenant le formattage de l'édition pour la
+ * première, deuxième et troisième édition puisqu'il est différent.
+ * @return string : retourne le titre formatter avec l'édition, sinon le titre.
+ */
 function titleEditionFormatting($title, $edition, $tabEdition) {
     if ($edition != '') {
         return $title . ', ' . ($tabEdition[$edition] ?? $edition . 'th ed.');
@@ -39,11 +55,14 @@ function titleEditionFormatting($title, $edition, $tabEdition) {
     }
 }
 
+/**
+ * Fonction permettant d'afficher que le livre a été supprimé avec succès.
+ * @return string : retourne un message de suppression avec succès si la suppression
+ * a eu lieu, sinon retourne une chaîne vide.
+ */
 function showSuccessfulDeletedBookMsg() {
     return isset($_GET['delete']) ? "<h2 id='msgSuppression'>Ouvrage supprimé avec succès.</h2>" : '';
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -53,10 +72,11 @@ function showSuccessfulDeletedBookMsg() {
     <link rel="stylesheet" href="style.css">
     <title>Bibliographie</title>
     <style>
-        tbody td{
+        tbody td {
             margin: 0 5px;
             padding: 20px;
         }
+
         tr:nth-child(even) {
             background-color: white;
         }

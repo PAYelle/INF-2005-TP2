@@ -4,6 +4,11 @@ require 'utils.php';
 use function Ouvrages\{findById};
 use function Utils\{getSupports, showSupports};
 
+/**
+ * Fonction permettant d'afficher le livre dans la table html.
+ * @param $ouvrage : l'ouvrage contenant les informations a afficher,
+ * affiche rien s'il n'y a pas d'ouvrage.
+ */
 function showBook($ouvrage) {
     if ($ouvrage) {
         $datas = getAttributes($ouvrage);
@@ -13,6 +18,10 @@ function showBook($ouvrage) {
     }
 }
 
+/**
+ * Fonction permettant de créer et d'afficher une 'row' pour la table html.
+ * @param $datas : les informations sur l'ouvrage a afficher.
+ */
 function showTableRow($datas) {
     $supports = showSupports($datas['supports']);
     echo "<tr>";
@@ -29,6 +38,13 @@ function showTableRow($datas) {
     echo "</tr>";
 }
 
+/**
+ * Fonction permettant d'allé chercher les attributs sur l'ouvrage et de les
+ * mettre dans un tableau.
+ * @param $ouvrage : l'ouvrage contenant les informations dans la bd.
+ * @return mixed : le tableau contenant les données sur l'ouvrage et le data
+ * qui sera affiché à l'écran dans la table html.
+ */
 function getAttributes($ouvrage) {
     $id = getAttribute('id', $ouvrage);
     $datas['titre'] = getAttribute('titre', $ouvrage);
@@ -44,14 +60,22 @@ function getAttributes($ouvrage) {
     return $datas;
 }
 
+/**
+ * Fonction permettant d'allé chercher un attribut spécifique dans un
+ * ouvrage.
+ * @param $attribute : l'attribut de l'ouvrage que l'on veut.
+ * @param $ouvrage : l'ouvrage d'où on prend la donnée.
+ * @return string|null : retourne l'attribut s'il est existant dans l'ouvrage,
+ * sinon retourne null.
+ */
 function getAttribute($attribute, $ouvrage) {
     return $ouvrage[$attribute] ?? null;
 }
 
-function hideButton($ouvrage) {
-    echo $ouvrage === null ? 'hidden' : '';
-}
-
+/**
+ * Fonction permettant de bâtir un message montrant que l'ouvrage a été modifié avec succès.
+ * @return string : un message de succès de la modification, sinon retourne une chaîne vide.
+ */
 function showSuccessfulModifiedBookMsg() {
     return isset($_GET['modif']) ? "<h2 id='msgModification'>Ouvrage modifié avec succès.</h2>" : '';
 }
@@ -83,6 +107,10 @@ $ouvrage = findById($id);
             font-size: 16px;
             text-align: center;
             padding: 10px 0;
+        }
+
+        body table {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -116,7 +144,7 @@ $ouvrage = findById($id);
         </section>
         <section>
             <form>
-                <button formaction="index.php" <?php hideButton($ouvrage); ?>>Retourner à la bibliographie</button>
+                <button formaction="index.php">Retourner à la bibliographie</button>
             </form>
         </section>
     </main>

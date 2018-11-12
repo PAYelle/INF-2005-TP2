@@ -3,38 +3,13 @@ session_start();
 require 'ouvrages.php';
 require 'utils.php';
 use function Ouvrages\{replace};
-use function Utils\{numberFormatting, textFormatting, checkBoxFormatting};
+use function Utils\{numberFormatting, textFormatting, checkBoxFormatting, validateForm};
 
-function validAttr($attribute, $value) {
-    $validationRegex = function ($pattern, $value) {
-        return preg_match($pattern, $value);
-    };
-    $supportsSelected = function ($supports) {
-        return $supports != '' ? 1 : 0;
-    };
-    if ($attribute == 'titre' || $attribute == 'auteurs' || $attribute == 'editeur') {
-        return $validationRegex('/^.+$/', $value);
-    } else if ($attribute == 'sousTitre') {
-        return $validationRegex('/^.*$/', $value);
-    } else if ($attribute == 'edition') {
-        return $validationRegex('/^[0-9]*$/', $value);
-    } else if ($attribute == 'anneeParution') {
-        return $validationRegex('/^[1-9][0-9]*$/', $value);
-    } else if ($attribute == 'isbn') {
-        return $validationRegex('/^(|[0-9]{10}$|^[0-9]{13})$/', $value);
-    } else if ($attribute == 'supports') {
-        return $supportsSelected($value);
-    }
-}
-
-function validateForm($datas) {
-    foreach ($datas as $attribute => $value) {
-        if (!validAttr($attribute, $value))
-            $errorTab[] = $attribute;
-    }
-    return $errorTab ?? [];
-}
-
+/**
+ * Fonction permettant de modifier l'ouvrage dans la bd, de nettoyer
+ * et vider les variables et de faire la redirection vers la page show.php.
+ * @param $dataSource : l'information sur l'ouvrage a modifier.
+ */
 function validProtocol($dataSource) {
     $id = editBookDB($dataSource);
     unset($_SESSION['donnees']);
@@ -42,6 +17,12 @@ function validProtocol($dataSource) {
     header("Location: show.php?id=$id&modif=success");
 }
 
+/**
+ * Fonction permettant d'ajouter les erreurs dans la session courante et de
+ * faire la redirection vers la page edit.php avec un attribut erreur à true.
+ * @param $dataSource : 
+ * @param $errorSource
+ */
 function errorProtocol($dataSource, $errorSource) {
     $id = $_GET['id'];
     $_SESSION['donnees'] = $dataSource;

@@ -1,8 +1,9 @@
 <?php
 session_start();
 require 'utils.php';
-use function Utils\{showValue, showCheckBox, showError};
+use function Utils\{showCheckBox, showError, showValue};
 
+/*Tableau contenant les messages d'erreurs*/
 $errorMessages = [
     'titre' => 'Titre obligatoire',
     'auteurs' => 'Auteur obligatoire',
@@ -13,6 +14,7 @@ $errorMessages = [
     'supports' => 'Sélectionner au moins un support'
 ];
 
+//MAIN
 $dataSource = $_SESSION['donnees'] ?? [];
 $dataError = isset($_GET['error']) ? $_SESSION['erreurs'] : [];
 ?>
@@ -39,6 +41,10 @@ $dataError = isset($_GET['error']) ? $_SESSION['erreurs'] : [];
             border: 1px solid dodgerblue;
             padding: 6px 10px;
             margin-bottom: 15px;
+        }
+
+        input[type=checkbox] {
+            margin-bottom: 5px;
         }
 
         button {

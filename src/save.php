@@ -3,38 +3,12 @@ session_start();
 require 'ouvrages.php';
 require 'utils.php';
 use function Ouvrages\{create};
-use function Utils\{numberFormatting, textFormatting, checkBoxFormatting};
+use function Utils\{numberFormatting, textFormatting, checkBoxFormatting, validateForm};
 
-function validAttr($attribute, $value) {
-    $validationRegex = function ($pattern, $value) {
-        return preg_match($pattern, $value);
-    };
-    $supportsSelected = function ($supports) {
-        return $supports != '' ? 1 : 0;
-    };
-    if ($attribute == 'titre' || $attribute == 'auteurs' || $attribute == 'editeur') {
-        return $validationRegex('/^.+$/', $value);
-    } else if ($attribute == 'sousTitre') {
-        return $validationRegex('/^.*$/', $value);
-    } else if ($attribute == 'edition') {
-        return $validationRegex('/^[0-9]*$/', $value);
-    } else if ($attribute == 'anneeParution') {
-        return $validationRegex('/^[1-9][0-9]*$/', $value);
-    } else if ($attribute == 'isbn') {
-        return $validationRegex('/^(|[0-9]{10}$|^[0-9]{13})$/', $value);
-    } else if ($attribute == 'supports') {
-        return $supportsSelected($value);
-    }
-}
-
-function validateForm($datas) {
-    foreach ($datas as $attribute => $value) {
-        if(!validAttr($attribute, $value))
-        $errorTab[] = $attribute;
-    }
-    return $errorTab ?? [];
-}
-
+/**
+ * Fonction permettant d'ajouter l'ouvrage dans la bd, de nettoyer, vider les variables
+ * et de faire la redirection vers la page show.php si le formulaire est valide.
+ */
 function validProtocol() {
     $id = addBookDB($_SESSION['donnees']);
     unset($_SESSION['donnees']);
@@ -42,11 +16,22 @@ function validProtocol() {
     header("Location: show.php?id=$id");
 }
 
-function errorProtocol($errorSource) {
-    $_SESSION['erreurs'] = $errorSource;
+/**
+ * Fonction permettant d'ajouter les erreurs dans la session courante et de
+ * faire la redirection vers la page create.php avec un attribut erreur à true.
+ * @param $errorTab : tableau contenant les erreurs dans le formulaire.
+ */
+function errorProtocol($errorTab) {
+    $_SESSION['erreurs'] = $errorTab;
     header("Location: create.php?error=true");
 }
 
+/**
+ * Fonction permettant d'ajouter l'ouvrage dans la base de données en y formattant
+ * les champs avant de les insérer dans la bd.
+ * @param $dataSource : l'information sur l'ouvrage a ajouté.
+ * @return mixed : retourne l'ouvrage ajouté dans la base de données.
+ */
 function addBookDB($dataSource) {
     $ouvrage = create([
                           'anneeParution' => numberFormatting('anneeParution', $dataSource),
@@ -62,6 +47,11 @@ function addBookDB($dataSource) {
     return $ouvrage;
 }
 
+/**
+ * Fonction permettant de sauvegarder l'ouvrage dans la base de données ou
+ * de renvoyer les erreurs du formulaire dans la session courante pour que
+ * l'utilisateur puisse les corrigés.
+ */
 function save() {
     $_SESSION['donnees'] = $_POST['donnees'];
     $_SESSION['donnees']['supports'] = $_POST['donnees']['supports'] ?? '';

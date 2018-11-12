@@ -2,8 +2,10 @@
 require 'ouvrages.php';
 use function Ouvrages\{removeById};
 
+/**
+ * Fonction permettant de supprimer un ouvrage de la base de données.
+ */
 function delete() {
-    print_r($_REQUEST['id']);
     removeById($_REQUEST['id']);
     header('Location: index.php?delete=success');
 }

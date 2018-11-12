@@ -2,11 +2,11 @@
 namespace Ouvrages;
 
 function read() {
-    return json_decode(file_get_contents('./ouvrages.json'), true);
+    return json_decode(file_get_contents('./ouvragesBU.json'), true);
 }
 
 function write($ary) {
-    file_put_contents('./ouvrages.json', json_encode($ary));
+    file_put_contents('./ouvragesBU.json', json_encode($ary));
 }
 
 function findAll() {
