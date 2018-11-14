@@ -2,7 +2,7 @@
 namespace Ouvrages;
 
 function read() {
-    return json_decode(file_get_contents('./ouvragesBU.json'), true);
+    return json_decode(file_get_contents('./ouvrages.json'), true);
 }
 
 function write($ary) {

@@ -18,8 +18,6 @@ function showBookIndex() {
             $datas['actions'] = "<a href='show.php?id={$datas['id']}'>Afficher</a>";
             showTableRowIndex($datas);
         }
-    } else {
-        echo "<h3>Il n'y a présentement aucun livre à afficher.</h3>";
     }
 }
 
@@ -63,6 +61,7 @@ function titleEditionFormatting($title, $edition, $tabEdition) {
 function showSuccessfulDeletedBookMsg() {
     return isset($_GET['delete']) ? "<h2 id='msgSuppression'>Ouvrage supprimé avec succès.</h2>" : '';
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -54,13 +54,18 @@ table {
 }
 
 tbody {
-    background-color: #f2fcf7;
+    background-color: #d1effc;
 }
 
 td, th {
     padding: 8px 20px;
 }
 
-button:hover, a:hover {
-    opacity: 0.7;
+button:hover {
+    border: 1px solid royalblue;
+    color: royalblue;
+}
+
+a:hover {
+    color: royalblue;
 }
