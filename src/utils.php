@@ -146,7 +146,7 @@ function sanitizeSting($attribute, $dataSource) {
  */
 function validAttr($attribute, $value) {
     $validationRegex = function ($pattern, $value) {
-        return preg_match($pattern, $value);
+        return preg_match($pattern, trim($value));
     };
     $supportsSelected = function ($supports) {
         return $supports != '' ? 1 : 0;
@@ -156,7 +156,7 @@ function validAttr($attribute, $value) {
     } else if ($attribute == 'sousTitre') {
         return $validationRegex('/^.*$/', $value);
     } else if ($attribute == 'edition') {
-        return $validationRegex('/^[0-9]*$/', $value);
+        return $validationRegex('/^(1|[2-9][0-9]*)*$/', $value);
     } else if ($attribute == 'anneeParution') {
         return $validationRegex('/^[1-9][0-9]*$/', $value);
     } else if ($attribute == 'isbn') {
