@@ -108,7 +108,7 @@ $dataError = isset($_GET['error']) ? $_SESSION['erreurs'] : [];
             <input id="isbn" type="text" name="donnees[isbn]" value="<?php echo showValue('isbn', $dataSource); ?>"><br>
             <?php echo showError('isbn', $dataError, $errorMessages); ?>
 
-            <label for="supports">Supports <span>*</span></label><br>
+            <label>Supports <span>*</span></label><br>
             <?php
             $tabSupports = ['kindle' => 'Kindle', 'epub' => 'EPUB', 'papier' => 'Papier', 'pdf' => 'PDF'];
             foreach ($tabSupports as $key => $value) {

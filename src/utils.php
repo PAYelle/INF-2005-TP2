@@ -40,7 +40,7 @@ function showCheckBox($key, $value, $dataSource) {
         }
     }
     $checked = $supportExists ? 'checked' : '';
-    return "<input id='supports' type='checkbox' name='donnees[supports][$value]' $checked>$value<br>";
+    return "<input class='supports' type='checkbox' name='donnees[supports][$value]' $checked>$value<br>";
 }
 
 /**

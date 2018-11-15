@@ -6,7 +6,7 @@ function read() {
 }
 
 function write($ary) {
-    file_put_contents('./ouvragesBU.json', json_encode($ary));
+    file_put_contents('./ouvrages.json', json_encode($ary));
 }
 
 function findAll() {

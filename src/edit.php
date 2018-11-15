@@ -21,7 +21,7 @@ $errorMessages = [
  * @return string: un message d'erreur s'il y a erreur, sinon retourne une chaîne vide.
  */
 function showErrorUpdateMsg() {
-    return isset($_GET['error']) ? "<h2>Oops! Des erreurs empêchent la sauvegarde des modifications</h2>" : '';
+    return isset($_GET['error']) ? "<h2 id='msgErreur'>Oops! Des erreurs empêchent la sauvegarde des modifications</h2>" : '';
 }
 
 //MAIN
@@ -73,6 +73,12 @@ $dataError = isset($_GET['error']) ? $_SESSION['erreurs'] : [];
             opacity: 0.7;
         }
 
+        #msgErreur{
+            color: red;
+            background-color: lightgray;
+            border-radius: 6px;
+        }
+
         #btnAnnuler {
             background-color: dodgerblue;
             color: white;
@@ -121,7 +127,7 @@ $dataError = isset($_GET['error']) ? $_SESSION['erreurs'] : [];
             <input id="isbn" type="text" name="donnees[isbn]" value="<?php echo showValue('isbn', $dataSource); ?>"><br>
             <?php echo showError('isbn', $dataError, $errorMessages); ?>
 
-            <label for="supports">Supports <span>*</span></label><br>
+            <label>Supports <span>*</span></label><br>
             <?php
             $tabSupports = ['kindle' => 'Kindle', 'epub' => 'EPUB', 'papier' => 'Papier', 'pdf' => 'PDF'];
             foreach ($tabSupports as $key => $value) {
