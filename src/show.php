@@ -39,7 +39,7 @@ function showTableRow($datas) {
 }
 
 /**
- * Fonction permettant d'allé chercher les attributs sur l'ouvrage et de les
+ * Fonction permettant d'aller chercher les attributs sur l'ouvrage et de les
  * mettre dans un tableau.
  * @param $ouvrage : l'ouvrage contenant les informations dans la bd.
  * @return mixed : le tableau contenant les données sur l'ouvrage et le data
